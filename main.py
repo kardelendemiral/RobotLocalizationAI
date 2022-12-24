@@ -22,12 +22,6 @@ def getTransmissionProb(a, b): #transmission probability from a to b
     else:
         return 0
 
-def filtering(T, probs, obs_matrix): # bunu yaparsak oldu
-    print("bi şekilde filter")
-    new_state = np.dot(obs_matrix, np.dot(T, probs))
-    new_state_normalized = new_state / np.sum(new_state)
-    return new_state_normalized
-
 def filter(N, prev_probs, E, T, s):
     probs = np.zeros(N)
     for l in range(N):
@@ -40,19 +34,6 @@ def filter(N, prev_probs, E, T, s):
     probs = probs / np.sum(probs) #normalize
 
     return probs
-
-
-def create_observation_matrix(error_rate, no_discrepancies):
-    sensor_list = []
-    for number in no_discrepancies:
-        probability = (1 - error_rate) ** (4 - number) * error_rate ** number
-        sensor_list.append(probability)
-        observation_matrix = np.zeros((len(sensor_list), len(sensor_list)))
-        np.fill_diagonal(observation_matrix, sensor_list)
-    return observation_matrix
-
-
-
 
 probs = np.array([1/len(walls)]*len(walls))
 
